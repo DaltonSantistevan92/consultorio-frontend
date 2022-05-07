@@ -2,43 +2,128 @@
 
 <div class="container-fluid mt-6">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header bg-dark">
                     <span class="text-white">Gestión de Horarios</span>
                 </div>
                 <div class="card-body">
-                    <form [formGroup]="formulario" (ngSubmit)="guardarDatosHorarios()" >
+                    <form [formGroup]="formulario" (ngSubmit)="guardarDatosHorarios()">
                         <div class="row">
                             <div class="col-3 form-group">
-                               <label>Hora de Entrada</label>
-                               <input type="time" class="form-control" formControlName="entrada" placeholder="Ingrese la Hora de Entrada">
+                                <label>Hora Entrada</label>
+                                <input type="time" class="form-control" formControlName="entrada"
+                                    placeholder="Ingrese la Hora de Entrada"
+                                    [ngClass]="(submitted && fo['entrada']?.errors) || (fo['entrada'].touched || fo['entrada'].dirty) ? 'is-invalid': ''"
+                                    [ngClass]="fo['entrada'].valid ? 'is-valid' : ''">
+
+                                <div *ngIf="submitted || (fo['entrada'].touched || fo['entrada'].dirty)">
+                                    <small *ngIf="fo['entrada'].errors?.['required']" class="text-danger">
+                                        Seleccione una Hora de Entrada
+                                    </small>
+
+                                </div>
                             </div>
                             <div class="col-3 form-group">
-                                <label>Hora de Salida</label>
-                                <input type="time" class="form-control" formControlName="salida" placeholder="Ingrese la Hora de Salida">
+                                <label>Hora Salida</label>
+                                <input type="time" class="form-control" formControlName="salida"
+                                    placeholder="Ingrese la Hora de Salida"
+                                    [ngClass]="(submitted && fo['salida']?.errors) || (fo['salida'].touched || fo['salida'].dirty) ? 'is-invalid': ''"
+                                    [ngClass]="fo['salida'].valid ? 'is-valid' : ''">
+                                <div *ngIf="submitted || (fo['salida'].touched || fo['salida'].dirty)">
+                                    <small *ngIf="fo['salida'].errors?.['required']" class="text-danger">
+                                        Seleccione una Hora de Salida
+                                    </small>
+
+                                </div>
                             </div>
                             <div class="col-4 form-group">
                                 <label>Fecha</label>
-                                <input type="date"  [min]="min | date:'yyyy-MM-dd'" formControlName="fecha" class="form-control">
+                                <input type="date" [min]="min | date:'yyyy-MM-dd'" formControlName="fecha"
+                                    class="form-control"
+                                    [ngClass]="(submitted && fo['fecha']?.errors) || (fo['fecha'].touched || fo['fecha'].dirty) ? 'is-invalid': ''"
+                                    [ngClass]="fo['fecha'].valid ? 'is-valid' : ''">
+
+                                <div *ngIf="submitted || (fo['fecha'].touched || fo['fecha'].dirty)">
+                                    <small *ngIf="fo['fecha'].errors?.['required']" class="text-danger">
+                                        Seleccione una Fecha
+                                    </small>
+
+                                </div>
                             </div>
                             <div class="col-2 form-group">
                                 <label>Intervalo</label>
-                                <input type="text" class="form-control" formControlName="intervalo" (keypress)="validarNumero($event)">
+                                <input type="text" class="form-control" formControlName="intervalo"
+                                    (keypress)="validarNumero($event)"
+                                    [ngClass]="(submitted && fo['intervalo']?.errors) || (fo['intervalo'].touched || fo['intervalo'].dirty) ? 'is-invalid': ''"
+                                    [ngClass]="fo['intervalo'].valid ? 'is-valid' : ''">
+
+                                <div *ngIf="submitted || (fo['intervalo'].touched || fo['intervalo'].dirty)">
+                                    <small *ngIf="fo['intervalo'].errors?.['required']" class="text-danger">
+                                        Intervalo es requerido
+                                    </small>
+
+                                </div>
                             </div>
 
                         </div>
                         <div class="col-12 mt-2">
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                                <button type="submit" class="btn bg-gradient-primary btn-sm">
-                                    
-                                       Guardar
-                                    
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="submit" [disabled]="formulario.invalid || okButton"
+                                    class="btn bg-gradient-primary btn-sm">
+
+                                    Guardar
+
                                 </button>
-                            </div> 
+                            </div>
                         </div>
 
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="table-vehiculo">
+                <div class="card card-dark">
+                    <div class="card-header bg-dark">
+                        <span class="text-white">Horas Disponibles del Doctor</span>
+                    </div>
+
+                    <div class="card-body table-responsive p-3" style="overflow: auto;">
+                        <table class="table table-hover text-nowrap table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Horario</th>
+                                    <th>Fecha</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of horarioData.doctor_horario | paginacion: pageSize : pageNumber; let i = index ">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.horario}}</td>
+                                    <td><span class="tag tag-warning">{{item.fecha}}</span></td>
+                                    <td>
+                                        <div class="d-flex justify-content-center">
+                                            <button class="btn bg-gradient-primary"
+                                                (click)="eliminar_doctor_horario(item.id)">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <div class="col-12">
+                                    <mat-paginator [length]="horarioData.doctor_horario.length" *ngIf="horarioData.doctor_horario.length > 0"
+                                        [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"
+                                        (page)="handlePage($event)">
+                                    </mat-paginator>
+                                </div>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
