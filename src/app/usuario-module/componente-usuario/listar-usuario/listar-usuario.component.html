@@ -1,0 +1,52 @@
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-12 col-md-3 mt-3" *ngFor="let lu of usuarioData.data">
+            <div class="card">
+                <div class="card-header p-0 mx-2 mt-3 position-relative z-index-1">
+                    <a class="d-flex justify-content-center">
+                        <img [src]="verimg(lu.img)" class="img border-radius-lg">
+                    </a>
+                </div>
+
+                <div class="card-body pt-2 text-center">
+                    <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2"> {{lu.correo}} </span>
+                    <a class="card-title h5 d-block text-darker"> {{lu.persona.nombre}} {{lu.persona.apellido}} </a>
+                    <div class="author justify-content-center">
+                        <div class="row">
+                            <div class="d-flex flex-column">
+                                <span class="mb-2 text-xs text-dark">Rol:
+                                    <span class="text-dark font-weight-bold ms-sm-2"> {{lu.rol.cargo}} </span>
+                                </span>
+                                <span class="mb-2 text-xs text-dark">Usuario: 
+                                    <span class="text-dark font-weight-bold ms-sm-2"> {{lu.usuario}} </span>
+                                </span>
+                                <span class="mb-2 text-xs text-dark">Teléfono: 
+                                    <span class="text-dark ms-sm-2 font-weight-bold"> {{lu.persona.telefono}} </span>
+                                </span>
+                                <span class="text-xs text-dark">Dirección: 
+                                    <span class="text-dark ms-sm-2 font-weight-bold"> {{lu.persona.direccion}} </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button (click)="editar(lu.id)" class="btn btn-outline-primary btn-sm">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button (click)="eliminar(lu.id)" class="btn btn-outline-primary btn-sm">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

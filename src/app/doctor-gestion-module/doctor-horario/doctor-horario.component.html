@@ -1,0 +1,46 @@
+<!-- <p>doctor-horario works!</p> -->
+
+<div class="container-fluid mt-6">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-dark">
+                    <span class="text-white">Gestión de Horarios</span>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="formulario" (ngSubmit)="guardarDatosHorarios()" >
+                        <div class="row">
+                            <div class="col-3 form-group">
+                               <label>Hora de Entrada</label>
+                               <input type="time" class="form-control" formControlName="entrada" placeholder="Ingrese la Hora de Entrada">
+                            </div>
+                            <div class="col-3 form-group">
+                                <label>Hora de Salida</label>
+                                <input type="time" class="form-control" formControlName="salida" placeholder="Ingrese la Hora de Salida">
+                            </div>
+                            <div class="col-4 form-group">
+                                <label>Fecha</label>
+                                <input type="date"  [min]="min | date:'yyyy-MM-dd'" formControlName="fecha" class="form-control">
+                            </div>
+                            <div class="col-2 form-group">
+                                <label>Intervalo</label>
+                                <input type="text" class="form-control" formControlName="intervalo" (keypress)="validarNumero($event)">
+                            </div>
+
+                        </div>
+                        <div class="col-12 mt-2">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                <button type="submit" class="btn bg-gradient-primary btn-sm">
+                                    
+                                       Guardar
+                                    
+                                </button>
+                            </div> 
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

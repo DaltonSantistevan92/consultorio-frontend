@@ -1,0 +1,101 @@
+.bg-gris{
+    background: #EDEDED;
+    /* #2A3F54 EDEDED #F7F7F7 */
+}
+
+.bg-gradient-primary {
+  background-image: linear-gradient(310deg, #7928CA 0%, #FF0080 100%);
+}
+
+.img{
+  border-radius: 50px;
+  width: 100px;
+}
+
+.example-sidenav { 
+  width: 300px;
+  /* background-color: #cccc; */
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 20px;
+}
+
+.example-card {
+  max-width: 400px;
+}
+
+
+.example-card {
+  max-width: 400px;
+  margin-bottom: 8px;
+  background-color: #2A3F54 !important;
+
+}
+
+
+
+
+
+
+
+
+
+.example-container {
+    width: 100%;
+    height: 100vh;
+    /* border: 1px solid rgba(0, 0, 0, 0.5); */
+}
+
+
+
+  .card-p {
+    background-color: #2A3F54;
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+  }
+
+  .cad-p-text {
+    font-size: 1.2rem;
+  }
+
+  .nav-menu-item {
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .nav-menu-item:hover {
+    background-color: #ecb6dc;
+  }
+  
+  .nav-menu-item:hover > span{
+    color: #fff !important;
+  }
+
+
+  .bg-gray-100 {
+    background-color: #2A3F54 !important;
+    /* 2A3F54 f8f9fa */
+  }
+
+  
+
+
+
+.bg-drawer{
+  background: mintcream;
+}
+
+.mat-menu{
+  background-color: #2A3F54 !important;
+
+}
+
+.violet{
+  background: violet;
+}

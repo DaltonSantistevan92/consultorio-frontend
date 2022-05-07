@@ -1,0 +1,122 @@
+
+
+<div class="" mat-dialog-content>
+    <div class="modal-content">
+        <div class="modal-header bg-dark">
+            <span class="text-white modal-title">Datos de Usuario</span> 
+        </div>
+        <div class="modal-body">
+            <form *ngFor="let l of listarUsuario.data">
+                <div [formGroup]="formulario" class="col-12">
+                    <div class="row">
+                        <div class="form-group col-12 col-md-4">
+                            <label class="col-form-label">Nombre:</label>
+                            <input [(ngModel)]="l.persona.nombre" formControlName="nombre" (keypress)="validarLetras($event)" type="text" class="form-control"
+                            [ngClass]="(submitted && f['nombre']?.errors) || (f['nombre'].touched || f['nombre'].dirty) ? 'is-valid': ''"
+                            [ngClass]="f['nombre'].valid || nombreValid ? 'is-valid' : ''">
+
+                            <div *ngIf="submitted || (f['nombre'].touched || f['nombre'].dirty)">
+                                <small *ngIf="f['nombre'].errors?.['required']" class="text-danger">
+                                    Nombre es requerido
+                                </small>
+
+                                <small *ngIf="f['nombre'].errors?.['minlength']" class="text-danger">
+                                    Mínimo 3 caracteres
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            <label class="col-form-label">Apellido:</label>
+                            <input [(ngModel)]="l.persona.apellido" formControlName="apellido" (keypress)="validarLetras($event)" type="text" class="form-control"
+                            [ngClass]="(submitted && f['apellido']?.errors) || (f['apellido'].touched || f['apellido'].dirty) ? 'is-valid': ''"
+                            [ngClass]="f['apellido'].valid || apellidoValid ? 'is-valid' : ''">
+
+                            <div *ngIf="submitted || (f['apellido'].touched || f['apellido'].dirty)">
+                                <small *ngIf="f['apellido'].errors?.['required']" class="text-danger">
+                                    Apellido es requerido
+                                </small>
+
+                                <small *ngIf="f['apellido'].errors?.['minlength']" class="text-danger">
+                                    Mínimo 3 caracteres
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            <label class="col-form-label">Teléfono:</label>
+                            <input [(ngModel)]="l.persona.telefono" formControlName="telefono" (keypress)="validarNumero($event)" type="text" class="form-control" maxlength="10" minlength="10"
+                            [ngClass]="(submitted && f['telefono']?.errors) || (f['telefono'].touched || f['telefono'].dirty) ? 'is-valid': ''"
+                            [ngClass]="f['telefono'].valid || telefonoValid ? 'is-valid' : ''">
+
+                            <div *ngIf="submitted || (f['telefono'].touched || f['telefono'].dirty)">
+                                <small *ngIf="f['telefono'].errors?.['required']" class="text-danger">
+                                    Teléfono es requerido
+                                </small>
+
+                                <small *ngIf="f['telefono'].errors?.['minlength']" class="text-danger">
+                                    Mínimo 10 dígitos
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            <label class="col-form-label">Usuario:</label>
+                            <input [(ngModel)]="l.usuario" formControlName="usuario" (keypress)="validarAlfaNumerico($event)" type="text" class="form-control"
+                            [ngClass]="(submitted && f['usuario']?.errors) || (f['usuario'].touched || f['usuario'].dirty) ? 'is-valid': ''"
+                            [ngClass]="f['usuario'].valid || usuarioValid ? 'is-valid' : ''">
+
+                            <div *ngIf="submitted || (f['usuario'].touched || f['usuario'].dirty)">
+                                <small *ngIf="f['usuario'].errors?.['required']" class="text-danger">
+                                    Usuario es requerido
+                                </small>
+
+                                <small *ngIf="f['usuario'].errors?.['minlength']" class="text-danger">
+                                    Mínimo 3 caracteres
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            <label class="col-form-label">Correo:</label>
+                            <input [(ngModel)]="l.correo" formControlName="email" (keyup)="validarCorreo($event)" type="email" class="form-control"
+                            [ngClass]="(submitted && f['email']?.errors) || (f['email'].touched || f['email'].dirty  || !emailValid) ? 'is-invalid': ''"
+                            [ngClass]="f['email'].valid || emailValid ? 'is-valid': ''">
+
+                            <div *ngIf="(submitted || f['email'].touched || f['email'].dirty)">
+                                <small *ngIf="f['email'].errors?.['required']" class="text-danger">
+                                    Correo es requerido
+                                </small>
+
+                                <small *ngIf="f['email'].errors?.['email']" class="text-danger">
+                                    Formato de email es incorrecto !!
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            <label class="col-form-label">Roles:</label>
+                            <select formControlName="rol_id" [(ngModel)]="l.rol.id"
+                                class="form-control" (change)="selectChangeRoles($event)">
+                                <option value="0">Selecione un cargo</option>
+                                <option *ngFor="let r of roles | async" [value]="r.id">{{r.cargo}}</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label class="col-form-label">Direccion:</label>
+                            <textarea [(ngModel)]="l.persona.direccion" formControlName="direccion" (keypress)="validarAlfaNumerico($event)" type="text" class="form-control" rows="1"></textarea>
+                        </div>  
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button (click)="cancelar()" type="button" class="btn bg-gradient-secondary" >Cancelar</button>
+            <button (click)="actualizarUsuario()" [routerLink]="['/dashboard/usuario/listar/']" [disabled]="formulario.valid && !emailValid || !okButton" type="button" class="btn bg-gradient-primary">
+                Guardar
+            </button>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- [mat-dialog-close]="true" -->

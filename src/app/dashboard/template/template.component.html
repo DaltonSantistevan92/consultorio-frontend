@@ -1,0 +1,63 @@
+<mat-toolbar class="bg-gris d-flex justify-content-between">
+    <div>
+        <button style="color: #fff !important;" mat-mini-fab class="bg-gradient-primary"
+            aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button> &nbsp;
+        <span class="text-dark">Consultorio</span>
+    </div>
+
+    <div class="d-flex">
+        <li class="nav-item dropdown pe-2 d-flex align-items-center">
+            <button style="color: #fff !important;" class="bg-gradient-primary" mat-mini-fab [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon>perm_identity</mat-icon>
+                    <span>Perfil</span>
+                </button>
+
+                <button mat-menu-item (click)="salir()">
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Cerrar sesión</span>
+                </button>
+            </mat-menu>
+        </li>
+    </div>
+</mat-toolbar>
+
+<mat-drawer-container class="example-container bg-drawer" autosize>
+    <mat-drawer #drawer class="example-sidenav bg-gray-100" mode="side">
+        <mat-card class="example-card">
+            <mat-card-title-group>
+                <mat-card-title class="mt-2 text-center text-white">{{nombreCompleto}}</mat-card-title>
+                <mat-card-subtitle class="text-center text-white">{{cargo}}</mat-card-subtitle>
+                <img class="img" mat-card-sm-image [src]="img">
+            </mat-card-title-group>
+        </mat-card>
+
+        <div class="box-menu">
+            <ul class="navbar-nav">
+                <li *ngFor="let objm of objMenu.data" class="nav-item mb-2" style="margin-bottom: 5px !important"
+                    (click)="cerrarMenu($event)">
+                    <a routerLink="{{ objm.url }}" routerLinkActive="active-link"
+                        class="nav-link nav-menu-item d-flex card-p mb-2"
+                        style="flex-direction: row; padding-left: 20px">
+                        <mat-icon class="text-white">{{ objm.icono }}</mat-icon>
+                        <div class="icon icon-shape icon-sm text-center me-2"
+                            style="color: #66748e; padding-top: 25px;">
+                        </div>
+                        <span class="cad-p-text pt-1" style="color: #66748e">
+                            {{ objm.menu }}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </mat-drawer>
+
+    <router-outlet></router-outlet>
+
+</mat-drawer-container>

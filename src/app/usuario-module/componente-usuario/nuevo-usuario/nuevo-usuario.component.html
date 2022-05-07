@@ -1,0 +1,210 @@
+<div class="container-fluid mt-6"> 
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-3">
+                <div class="card-header border bg-dark">
+                    <span class="text-white">Datos Personales</span> 
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="formulario" (ngSubmit)="guardarDatos()">
+                        <div class="row">
+                            <div class="col-12 col-md-2">
+                                <div class="h-100 w-100 d-flex justify-content-md-center mt-5">
+                                    <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" [multiple]="false"
+                                        (change)="onSelect($event)">
+                                        <ngx-dropzone-label>
+                                            <div>
+                                                <h2>Ingrese su foto</h2>
+                                            </div>
+                                        </ngx-dropzone-label>
+
+                                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                            *ngFor="let f of files" [file]="f" [removable]="true"
+                                            (removed)="onRemove(f)">
+                                        </ngx-dropzone-image-preview>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col order-1">
+                                <div class="row">
+                                    <div class="col-6"> 
+                                        <div class="p-1">
+                                            <label class="text-dark">Cédula:</label>
+                                            <input type="text" class="form-control" placeholder="Ingrese su cedula"
+                                                formControlName="cedula" (keypress)="validarNumero($event)" (change)="validarCedula($event)"
+                                                [ngClass]="(submitted && f['cedula']?.errors) || (f['cedula'].touched || f['cedula'].dirty) ? 'is-invalid': ''"
+                                                [ngClass]="f['cedula'].valid ? 'is-valid' : ''" maxlength="10">
+
+                                            <div *ngIf="submitted || (f['cedula'].touched || f['cedula'].dirty)">
+                                                <small *ngIf="f['cedula'].errors?.['required']" class="text-danger">
+                                                    Cédula es requerido
+                                                </small>
+
+                                                <small *ngIf="f['cedula'].errors?.['minlength']" class="text-danger">
+                                                    Mínimo 10 caracteres
+                                                </small>
+
+                                                <small *ngIf="!cedulaValid" class="text-danger">
+                                                    Cédula Incorrecta
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="p-1">
+                                            <label class="text-dark">Apellido:</label>
+                                            <input type="text" class="form-control" placeholder="Ingrese su apellido"
+                                                formControlName="apellido" (keypress)="validarLetras($event)"
+                                                [ngClass]="(submitted && f['apellido']?.errors) || (f['apellido'].touched || f['apellido'].dirty) ? 'is-invalid': ''"
+                                                [ngClass]="f['apellido'].valid ? 'is-valid' : ''">
+
+                                            <div *ngIf="submitted || (f['apellido'].touched || f['apellido'].dirty)">
+                                                <small *ngIf="f['apellido'].errors?.['required']" class="text-danger">
+                                                    Apellido es requerido
+                                                </small>
+
+                                                <small *ngIf="f['apellido'].errors?.['minlength']" class="text-danger">
+                                                    Mínimo 3 caracteres
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="p-1">
+                                            <label class="text-dark">Nombre:</label>
+                                            <input type="text" class="form-control" placeholder="Ingrese su nombre"
+                                                formControlName="nombre" (keypress)="validarLetras($event)"
+                                                [ngClass]="(submitted && f['nombre']?.errors) || (f['nombre'].touched || f['nombre'].dirty) ? 'is-invalid': ''"
+                                                [ngClass]="f['nombre'].valid ? 'is-valid' : ''">
+
+                                            <div *ngIf="submitted || (f['nombre'].touched || f['nombre'].dirty)">
+                                                <small *ngIf="f['nombre'].errors?.['required']" class="text-danger">
+                                                    Nombre es requerido
+                                                </small>
+
+                                                <small *ngIf="f['nombre'].errors?.['minlength']" class="text-danger">
+                                                    Mínimo 3 caracteres
+                                                </small>
+                                            </div>
+
+                                        </div>
+                                        <div class="p-1">
+                                            <label class="text-dark">Telefono:</label>
+                                            <input type="text" class="form-control" placeholder="Ingrese su telefono"
+                                                formControlName="telefono" (keypress)="validarNumero($event)"
+                                                [ngClass]="(submitted && f['telefono']?.errors) || (f['telefono'].touched || f['telefono'].dirty) ? 'is-invalid': ''"
+                                                [ngClass]="f['telefono'].valid ? 'is-valid' : ''" maxlength="10">
+
+                                            <div *ngIf="submitted || (f['telefono'].touched || f['telefono'].dirty)">
+                                                <small *ngIf="f['telefono'].errors?.['required']" class="text-danger">
+                                                    Cédula es requerido
+                                                </small>
+
+                                                <small *ngIf="f['telefono'].errors?.['minlength']" class="text-danger">
+                                                    Mínimo 10 caracteres
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group p-1">
+                                            <label class="text-dark">Dirección</label>
+                                            <textarea formControlName="direccion"
+                                                (keypress)="validarAlfaNumerico($event)" class="form-control"
+                                                rows="1"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col order-5 ">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="p-1">
+                                            <label class="text-dark">Usuario:</label>
+                                            <input type="text" class="form-control" placeholder="Ingrese el usuario"
+                                                formControlName="usuario" (keypress)="validarAlfaNumerico($event)"
+                                                [ngClass]="(submitted && f['usuario']?.errors) || (f['usuario'].touched || f['usuario'].dirty) ? 'is-invalid': ''"
+                                                [ngClass]="f['usuario'].valid ? 'is-valid' : ''">
+
+                                            <div *ngIf="submitted || (f['usuario'].touched || f['usuario'].dirty)">
+                                                <small *ngIf="f['usuario'].errors?.['required']" class="text-danger">
+                                                    Usuario es requerido
+                                                </small>
+
+                                                <small *ngIf="f['usuario'].errors?.['minlength']" class="text-danger">
+                                                    Mínimo 3 caracteres
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="p-1">
+                                            <label class="text-dark">Contraseña:</label>
+                                            <input type="text" class="form-control" placeholder="Ingrese su contraseña"
+                                                formControlName="password" (keypress)="validarAlfaNumerico($event)"
+                                                [ngClass]="(submitted && f['password']?.errors) || (f['password'].touched || f['password'].dirty) ? 'is-invalid': ''"
+                                                [ngClass]="f['password'].valid ? 'is-valid' : ''">
+
+                                            <div *ngIf="submitted || (f['password'].touched || f['password'].dirty)">
+                                                <small *ngIf="f['password'].errors?.['required']" class="text-danger">
+                                                    Contraseña es requerido
+                                                </small>
+
+                                                <small *ngIf="f['password'].errors?.['minlength']" class="text-danger">
+                                                    Mínimo 3 caracteres
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="p-1">
+                                            <label class="text-dark">Rol:</label>
+                                            <select formControlName="rol_id"
+                                                class="form-control" (change)="selectChangeRoles($event)">
+                                                <option value="0">Selecione un cargo</option>
+                                                <option *ngFor="let r of roles | async" [value]="r.id">{{r.cargo}}</option>
+                                            </select>
+
+                                            <div *ngIf="submitted && usuario.rol_id == 0" class="-mt-12">
+                                                <small class="text-danger">Seleccione un cargo</small>
+                                              </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="p-1">
+                                            <label class="text-dark">Correo:</label>
+                                            <input name="email" class="form-control" placeholder="Ingrese su correo"
+                                                formControlName="email" (keyup)="validarCorreo($event)"
+                                                [ngClass]="(submitted && f['email']?.errors) || (f['email'].touched || f['email'].dirty  || !emailValid) ? 'is-invalid': ''"
+                                                [ngClass]="f['email'].valid && emailValid ? 'is-valid': ''">
+
+                                            <div *ngIf="submitted || (f['email'].touched || f['email'].dirty)">
+                                                <small *ngIf="f['email'].errors?.['required']" class="text-danger">
+                                                    Correo es requerido
+                                                </small>
+
+                                                <small *ngIf="f['email'].errors?.['email']" class="text-danger">
+                                                    Formato de email es incorrecto !!
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 col-12">
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                            <button type="submit" [disabled]="formulario.invalid || okButton || emailValid || !cedulaValid" class="btn bg-gradient-primary btn-sm">
+                                                <div class="row">
+                                                    <mat-icon *ngIf="okButton" style="margin-right: 7px;">check</mat-icon>
+                                                    <mat-icon *ngIf="!okButton" style="margin-right: 20px;"></mat-icon>
+                                                    
+                                                    <div style="margin-top: -20px;margin-right: 7px;" >Guardar</div>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
