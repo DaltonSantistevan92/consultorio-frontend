@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { DoctorGestionModuleRoutingModule } from './doctor-gestion-module-routing.module';
 import { DoctorHorarioComponent } from './doctor-horario/doctor-horario.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 
@@ -16,7 +18,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     DoctorGestionModuleRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatPaginatorModule,
+    PipesModule
   ]
 })
 export class DoctorGestionModuleModule { }
